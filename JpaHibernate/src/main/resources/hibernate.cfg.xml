@@ -1,0 +1,49 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- JDBC Database connection settings -->
+
+        <!-- Configure MySQL -->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/db</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">root</property>
+        <property name="show_sql">true</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+
+
+        <!-- JDBC connection pool settings ... using built-in test pool -->
+        <property name="connection.pool_size">10</property>
+        <!-- Select our SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <!-- Echo the SQL to stdout -->
+        <property name="show_sql">true</property>
+        <!-- Set the current session context -->
+        <property name="current_session_context_class">thread</property>
+        <!-- Drop and re-create the database schema on startup -->
+        <property name="hbm2ddl.auto">create-drop</property>
+        <!-- dbcp connection pool configuration -->
+        <property name="hibernate.dbcp.initialSize">5</property>
+        <property name="hibernate.dbcp.maxTotal">20</property>
+        <property name="hibernate.dbcp.maxIdle">10</property>
+        <property name="hibernate.dbcp.minIdle">5</property>
+        <property name="hibernate.dbcp.maxWaitMillis">-1</property>
+<!--    <mapping class="org.hibernate.onetomany.unidirectional.firstapproach.Post"/>
+        <mapping class="org.hibernate.onetomany.unidirectional.firstapproach.Comment"/>
+        <mapping class="org.hibernate.onetomany.unidirectional.secondapproach.Author"/>
+        <mapping class="org.hibernate.onetomany.unidirectional.secondapproach.Book"/>
+         <mapping class="org.hibernate.onetomany.bidirectional.Department"/>
+        <mapping class="org.hibernate.onetomany.bidirectional.Employee"/>
+        <mapping class="org.hibernate.onetoone.efficientway.Department"/>
+        <mapping class="org.hibernate.onetoone.efficientway.DepartmentDetails"/> -->
+
+        <mapping class="org.hibernate.onetoone.efficientway.Car"/>
+        <mapping class="org.hibernate.onetoone.efficientway.Engine"/>
+        <mapping class="org.hibernate.onetoone.efficientway.Garage"/>
+
+
+    </session-factory>
+</hibernate-configuration>
