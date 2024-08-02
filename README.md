@@ -47,13 +47,26 @@ Jakarta Persistence API (JPA) is a specification for accessing, persisting, and 
    If maintaining a specific entry order is a concern, consider using a SortedSet instead of a Set, and apply 
    either `@SortNatural` or `@SortComparator`. For `@SortNatural`, entity need to implement Comparable. for example,
 
-` @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-   @JoinTable(name = "post_tag",
-   joinColumns = @JoinColumn(name = "post_id"),
-   inverseJoinColumns = @JoinColumn(name = "tag_id")
-   )
-   @SortNatural
-   private SortedSet<Category> categories = new TreeSet<>();`
+    `@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "post_tag",
+    joinColumns = @JoinColumn(name = "post_id"),
+    inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    @SortNatural
+    private SortedSet<Category> categories = new TreeSet<>();`
+
+5. **ManyToMany relationship when Join table has extra columns** : If you need to store extra columns in the join table, you should map the join table as a separate entity.
+   First, we need to map the composite primary key of the join table. To do this, we create an `@Embeddable` class to represent the composite key.
+   An `@Embeddable` type must be Serializable and override the equals and hashCode methods based on its primary keys values. Embedded this composite key into Join table as key.
+   A good practice to cache one entity for example Student and Course with Join table Enrollment, Course can be cached if Student side is controlling operations.
+   An entity with the `@NaturalId` annotation allows fetching by its business key, while the `@Cache` annotation sets the cache concurrency strategy.
+   The `@NaturalIdCache` instructs Hibernate to cache the entity identifier linked to the business key.Use `@NaturalId` in hash equal method.
+   To ensure proper consistency, use utility methods for adding and removing entities.
+   So Two bidirectional `@OneToMany` relations would be mapped for example Student, Course and Enrollment, One Students has many Enrollments and One Course has also many enrollments.
+   Each Enrollment has one Student and one course.
+
+    **Tips and important Note**: When mapping the intermediary join table, it is preferable to map only one side as a bidirectional `@OneToMany`
+    association. Otherwise, removing the intermediary join entity will trigger a second SELECT statement. for example, in Student, Course case, simply remove the collection of enrollment.
 
 ### Transaction Management
 

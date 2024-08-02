@@ -1,33 +1,13 @@
 package org.hibernate.relations.efficientonetoone;
 
-import org.hibernate.transactionmanagement.TransactionManager;
-import org.junit.jupiter.api.AfterAll;
+import org.hibernate.common.AbstractTest;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.hibernate.relations.efficientonetoone.EfficientOneToOneMappingWithSingleId.Department;
 import static org.hibernate.relations.efficientonetoone.EfficientOneToOneMappingWithSingleId.DepartmentDetails;
 
-public class EfficientOneToOneMappingWithSingleIdTest
+public class EfficientOneToOneMappingWithSingleIdTest extends AbstractTest
 {
-
-    private static TransactionManager transactionManager;
-
-    @BeforeAll
-    public static void setUp()
-    {
-        transactionManager = new TransactionManager(new Class[] { Department.class, DepartmentDetails.class });
-    }
-
-    @AfterAll
-    public static void tearDown()
-    {
-        if (transactionManager != null)
-        {
-            transactionManager.close();
-        }
-    }
-
     @Test
     public void testMapsIdOneToOneMapping()
     {
@@ -55,7 +35,7 @@ public class EfficientOneToOneMappingWithSingleIdTest
         }, getEntities());
     }
 
-    private static Class<?>[] getEntities()
+    public Class<?>[] getEntities()
     {
         return new Class[] { Department.class, DepartmentDetails.class };
     }

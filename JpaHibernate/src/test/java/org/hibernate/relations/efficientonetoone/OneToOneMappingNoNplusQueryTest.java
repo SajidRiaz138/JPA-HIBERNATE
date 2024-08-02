@@ -2,39 +2,14 @@ package org.hibernate.relations.efficientonetoone;
 
 import static org.hibernate.relations.efficientonetoone.OneToOneMappingNoNplusQuery.Department;
 import static org.hibernate.relations.efficientonetoone.OneToOneMappingNoNplusQuery.DepartmentDetails;
-import org.hibernate.SessionFactory;
-import org.hibernate.stat.Statistics;
-import org.hibernate.transactionmanagement.TransactionManager;
-import org.junit.jupiter.api.AfterAll;
+import org.hibernate.common.AbstractTest;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class OneToOneMappingNoNplusQueryTest
+public class OneToOneMappingNoNplusQueryTest extends AbstractTest
 {
-    private static TransactionManager transactionManager;
-    private static Class<?>[] entities;
-    private static Statistics statistics;
-
-    @BeforeAll
-    public static void setUp()
-    {
-        entities = new Class[] { Department.class, DepartmentDetails.class };
-        transactionManager = new TransactionManager(entities);
-        statistics = transactionManager.getEntityManagerFactory().unwrap(SessionFactory.class).getStatistics();
-        statistics.setStatisticsEnabled(true);
-    }
-
-    @AfterAll
-    public static void tearDown()
-    {
-        if (transactionManager != null)
-        {
-            transactionManager.close();
-        }
-    }
 
     @Test
     public void testNoNPlusOne()
@@ -62,5 +37,11 @@ public class OneToOneMappingNoNplusQueryTest
         }, entities);
         Assertions.assertEquals(10, posts.size());
         Assertions.assertEquals(1, statistics.getQueryExecutionCount());
+    }
+
+    @Override
+    public Class<?>[] getEntities()
+    {
+        return new Class[] { Department.class, DepartmentDetails.class };
     }
 }

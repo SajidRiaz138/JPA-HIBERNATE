@@ -6,33 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import jakarta.persistence.PersistenceException;
 import org.hibernate.Session;
-import org.hibernate.relations.manytomany.EfficientManyToManyRelation;
-import org.hibernate.transactionmanagement.TransactionManager;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.hibernate.common.AbstractTest;
 import org.junit.jupiter.api.Test;
 
-public class EfficientManyToManyRelationTest
+public class EfficientManyToManyRelationTest extends AbstractTest
 {
-    private static TransactionManager transactionManager;
-    private static Class<?>[] entities;
-
-    @BeforeAll
-    public static void setUp()
-    {
-        entities = EfficientManyToManyRelation.getEntities();
-        transactionManager = new TransactionManager(entities);
-    }
-
-    @AfterAll
-    public static void tearDown()
-    {
-        if (transactionManager != null)
-        {
-            transactionManager.close();
-        }
-    }
-
     @Test
     public void testManyToManyMapping()
     {
@@ -151,5 +129,11 @@ public class EfficientManyToManyRelationTest
                 entityManager.persist(duplicateCategory);
             }, entities);
         });
+    }
+
+    @Override
+    public Class<?>[] getEntities()
+    {
+        return new Class[] { Product.class, Category.class };
     }
 }
