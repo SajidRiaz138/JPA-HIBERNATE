@@ -2,6 +2,8 @@
 
 This repository contains examples and best practices for using Jakarta Persistence API (JPA) and Hibernate. The goal is to help developers achieve high performance and efficient data access in their applications.
 This repository contains numerous examples demonstrating how to achieve high performance and efficiency using JPA and Hibernate.
+## Use case 1 : Database Design: eCommerce Products
+
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -128,3 +130,4 @@ Jakarta Persistence API (JPA) is a specification for accessing, persisting, and 
 
 - [Jakarta Persistence API](https://jakarta.ee/specifications/persistence/)
 - https://vladmihalcea.com/
+- https://www.databasestar.com/
